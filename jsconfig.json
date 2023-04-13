@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": "SELF_PROJECT_FREEBOARD"
+  },
+  "include": [
+    "SELF_PROJECT_FREEBOARD"
+  ]
+}
