@@ -1,7 +1,8 @@
-const mysql  = require('mysql2');
-const dotenv = require('dotenv').config({path : '.env'});
+import mysql  from 'mysql2';
+import dotenv from 'dotenv';
+dotenv.config({path : '.env'});
 
-module.exports = mysql.createConnection({
+export default mysql.createConnection({
   host     : process.env.mysqlHost,
   user     : process.env.mysqlUser,
   port     : process.env.mysqlPort,
