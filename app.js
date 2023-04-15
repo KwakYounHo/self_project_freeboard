@@ -1,6 +1,6 @@
-const server = require('./src/server.js');
+import server from './src/modules/server.js';
 
-server.listen(8080,(err=>{
+server.listen(8080,(err)=>{
   if (err) throw err;
-  console.log('8080포트에서 서버 시작...');
-}))
+  console.log('App server open...');
+})
