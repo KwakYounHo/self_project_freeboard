@@ -1,5 +1,9 @@
 # 환경변수 파일
-.env
+/.env
 
 # Node 패키지
-node_modules
+/node_modules
+
+# test 파일
+/test.html
+/test.js
