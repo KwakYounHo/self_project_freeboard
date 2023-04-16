@@ -1,4 +1,4 @@
-export default function (tagName,target,Attribute,innerText) {
+export default function (tagName,target,Attribute,innerHTML) {
   const element = document.createElement(tagName);
   if (Attribute) {
     if (typeof(Attribute) === 'object') {
@@ -10,11 +10,11 @@ export default function (tagName,target,Attribute,innerText) {
       console.error(NoObject);
     }
   }
-  if (innerText) {
-    if (innerText && typeof(innerText) === 'string') {
-      element.innerText = innerText;
+  if (innerHTML) {
+    if (innerHTML && typeof(innerHTML) === 'string') {
+      element.innerHTML = innerHTML;
     } else {
-      const NoString = new Error('innerText 매개변수는 문자열 형식이어야 합니다.')
+      const NoString = new Error('innerHTML 매개변수는 문자열 형식이어야 합니다.')
       console.error(NoString);
     }
   }
