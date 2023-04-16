@@ -24,3 +24,22 @@ goHome.addEventListener('click',GoHome);
 function GoHome () {
   location.href='/Main.html';
 }
+
+
+// ? 게시판 리스트 요청 보내기
+const xhr = new XMLHttpRequest
+
+xhr.open('POST','/Community/board/GetList')
+
+xhr.send()
+
+xhr.addEventListener('load',()=>{
+  const boardListArray = JSON.parse(xhr.response);
+  for (let i=0; i<boardListArray.length; i++) {
+    const tr = tagMaker('tr',tbody);
+    tagMaker('td',tr,{},String(i+1));
+    tagMaker('td',tr,{},`<a href=/Community/board/View/${boardListArray[i].title}>${boardListArray[i].title}</a>`);
+    tagMaker('td',tr,{},boardListArray[i].writed);
+    tagMaker('td',tr,{},boardListArray[i].created.split('T')[0]);
+  }
+})
