@@ -11,9 +11,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
 const root       = path.join(__dirname,'../../');
 
+DB.connect(err=>{
+  if (err) throw err;
+  console.log('DB 서버 Connect');
+})
 export default http.createServer((req,rep)=>{
   // ? 요청 응답 함수 =====================
-
+  
   function getContentType () {
     switch (true) {
       case req.url.endsWith('.html') :
@@ -99,12 +103,8 @@ export default http.createServer((req,rep)=>{
     } else if (req.method === 'POST') {
       //* Switch 시작-(POST)
       switch (true) {
-        // * 회원가입 요청
+        // * 회원가입 요청 ==============================
         case req.url.includes('/createAccountRequest') :
-          DB.connect(err=>{
-            if (err) throw err;
-            console.log('회원가입 요청에 따른 DB 서버 Connect');
-          })
           let data = '';
           req.on('data',chunk=>{data += chunk});
           req.on('end', ()=>{
@@ -131,6 +131,20 @@ export default http.createServer((req,rep)=>{
             checkAccount();
           })
           break
+        //* ==============================================
+
+
+        //* 게시판 입장 -> 데이터 건내주기 ==================
+        case req.url.includes('/Community/board/GetList') :
+          DB.query(`select title,writed,created from boardlist`,((err,result)=>{
+            if (err) {console.log('게시판 리스트 가져오는 단계에서 에러 발생'); console.error(err);};
+            try {
+              Mrep(200,[JSON.stringify(result,null,2)],'text/json');
+            } catch (e) {
+              console.error('게시판 리스트 데이터 건내주는 단계에서 에러 : ',e);
+            }
+          }))
+        //* ===============================================
       }
       //* Switch 끝-(POST)
     }
