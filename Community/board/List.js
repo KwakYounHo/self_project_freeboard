@@ -38,7 +38,8 @@ xhr.addEventListener('load',()=>{
   for (let i=0; i<boardListArray.length; i++) {
     const tr = tagMaker('tr',tbody);
     tagMaker('td',tr,{},String(i+1));
-    tagMaker('td',tr,{},`<a href="/Community/board/View/${encodeURI(boardListArray[i].title)}>${boardListArray[i].title}</a>`);
+    console.log(boardListArray[i].title)
+    tagMaker('td',tr,{},`<a href="/Community/board/View/${encodeURI(boardListArray[i].title)}">${boardListArray[i].title}</a>`);
     tagMaker('td',tr,{},boardListArray[i].writed);
     tagMaker('td',tr,{},boardListArray[i].created.split('T')[0]);
   }
