@@ -86,6 +86,34 @@ export default http.createServer((req,rep)=>{
         // * =========================================
         
         
+        // * 게시판 뷰 페이지 요청 =====================
+        case req.url.includes('/Community/board/View/') :
+          if (req.url.endsWith('.js')) {
+            Mrep(200,['/Community/board/View/View.js'],'text/javascript');
+            break
+          } else if (req.url.endsWith('.css')) {
+            Mrep(200,['Community/board/View/View.css'],'text/css');
+            break
+          } else if (req.url.includes('/Community/board/View/title=')) {
+            const requestTitle = decodeURI(req.url.split('title=')[1]);
+            DB.query(`select * from boardlist where title='${requestTitle}'`,(err,result)=>{
+              Mrep(200,[JSON.stringify(result)],'text/json');
+            });
+            break
+          } else {
+            Mrep(200,['/Community/board/View/View.html'],'text/html');
+            break
+          }
+          // else {
+            // const requestTitle = decodeURI(req.url.split('/')[4]);
+            // DB.query(`select * from boardlist where title='${requestTitle}'`,(err,result)=>{
+              // Mrep(200,[JSON.stringify(result)],'text/json');
+            // });
+            // break
+          // }
+        // * ==========================================
+
+
         // ! 자동 응답 처리 ============================
         default : 
         try {
@@ -145,6 +173,9 @@ export default http.createServer((req,rep)=>{
             }
           }))
         //* ===============================================
+
+
+        //* 뷰 페이지 진입 -> 데이터 건내주기 ===============
       }
       //* Switch 끝-(POST)
     }
