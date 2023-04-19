@@ -22,8 +22,13 @@ const goHome = tagMaker('input',root,{
 });
 goHome.addEventListener('click',GoHome);
 function GoHome () {
-  location.href='/Main.html';
+  location.href = '/Main.html';
 }
+const writeBoardBotton = tagMaker('input',root,{'type':'button','value':'작성하기'});
+writeBoardBotton.addEventListener('click',()=>{
+  location.href = '/Community/board/writeBoard/writeBoard.html';
+})
+
 
 
 // ? 게시판 리스트 요청 보내기
