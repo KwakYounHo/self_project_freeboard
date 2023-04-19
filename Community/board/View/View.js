@@ -27,3 +27,17 @@ boardTextRequest.addEventListener('load',()=>{
   const updated_th       = tagMaker('th',table_footer,{},'수정일');
   const updated          = tagMaker('div',table_footer,{},parsedData.updated.split('T')[0]);
 })
+
+const buttonWrap       = tagMaker('div',root);
+const boardListButton  = tagMaker('input',buttonWrap,{'type':'button','value':'목록'});
+const homeButton       = tagMaker('input',buttonWrap,{'type':'button','value':'홈으로'});
+const writeButton      = tagMaker('input',buttonWrap,{'type':'button','value':'글 작성하기'});
+homeButton.addEventListener('click',()=>{
+  location.href = '/Main.html'
+})
+boardListButton.addEventListener('click',()=>{
+  location.href = '/Community/board/List.html'
+})
+writeButton.addEventListener('click',()=>{
+  location.href = '/Community/board/writeBoard/writeBoard.html'
+})
