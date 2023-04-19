@@ -1,0 +1,24 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#root > table:nth-child(1) {
+  width: 660px;
+  height: 800px;
+}
+
+table, tr, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+#form > table > thead > tr:nth-child(2) > input {
+  width: 98%;
+}
