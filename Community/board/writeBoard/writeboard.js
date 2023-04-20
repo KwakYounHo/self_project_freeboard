@@ -1,4 +1,4 @@
-import tagMaker from "../../../src/modules/tagMaker.js";
+import tagMaker from "/src/modules/tagMaker.js";
 
 const root      = tagMaker('div',document.body,{'id':'root'});
 const form      = tagMaker('form',root,{'id':'form','action':'/Community/board/writeBoard/writeRequest','method':'POST'});
