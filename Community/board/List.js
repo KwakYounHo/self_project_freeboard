@@ -1,4 +1,4 @@
-import tagMaker from "../../src/modules/tagMaker.js";
+import tagMaker from "/src/modules/tagMaker.js";
 
 const root   = tagMaker('div',document.body,{'id':'root'})
 const table  = tagMaker('table',root);
@@ -24,7 +24,9 @@ goHome.addEventListener('click',GoHome);
 function GoHome () {
   location.href = '/Main.html';
 }
-const writeBoardBotton = tagMaker('input',root,{'type':'button','value':'작성하기'});
+const writeBoardBotton = tagMaker('input',root,{
+  'type':'button','value':'작성하기'
+});
 writeBoardBotton.addEventListener('click',()=>{
   location.href = '/Community/board/writeBoard/writeBoard.html';
 })
