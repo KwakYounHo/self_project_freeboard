@@ -42,7 +42,7 @@ export default http.createServer((req,rep)=>{
         if (element.endsWith('.html')||element.endsWith('.js')||element.endsWith('.css')) {
           rep.write(fs.readFileSync(path.join(root,element),'utf-8'));
         } else {
-          rep.write(element)
+          rep.write(element);
         }
       })
     }
@@ -129,7 +129,7 @@ export default http.createServer((req,rep)=>{
         }
         //* Switch 끝-(GET)
     } else if (req.method === 'POST') {
-      //* Switch 시작-(POST)
+      //? Switch 시작-(POST)
       switch (true) {
         // * 회원가입 요청 ==============================
         case req.url.includes('/createAccountRequest') :
@@ -139,7 +139,7 @@ export default http.createServer((req,rep)=>{
             const parsed_data  = qs.parse(data);
             let hashed_pw      = bcrypt.hashSync(parsed_data.PW,12);
             let column         = Object.keys(parsed_data).join();
-            let values         = [parsed_data.ID,hashed_pw].map(element=>{return `\'${element}\'`}).join();
+            let values         = [parsed_data.ID,hashed_pw].map(element=>`\'${element}\'`).join();
             const checkAccount = () => {
               DB.query(`select ID from user_info where ID='${parsed_data.ID}'`,(err,result)=>{
                 if (err) {console.log('조회 실패'); throw err;}
@@ -172,12 +172,22 @@ export default http.createServer((req,rep)=>{
               console.error('게시판 리스트 데이터 건내주는 단계에서 에러 : ',e);
             }
           }))
+          break
         //* ===============================================
 
 
-        //* 뷰 페이지 진입 -> 데이터 건내주기 ===============
+        //* 로그인 요청 ====================================
+        case req.url.includes('logIn/logInRequest') :
+          let UserData;
+          req.on('data',chunk=>{
+            UserData += chunk;
+          })
+          req.on('end',()=>{
+            const _UserData = qs.parse(UserData);
+          })
+        //* ===============================================
       }
-      //* Switch 끝-(POST)
+      //? Switch 끝-(POST)
     }
   } catch (e) {
     console.log(`네트워크 요청 오류  url : ${req.url}`);
