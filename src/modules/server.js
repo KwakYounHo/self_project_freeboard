@@ -2,7 +2,7 @@ import http              from 'http';
 import fs                from 'fs';
 import path              from 'path';
 import { fileURLToPath } from 'url';
-import DB                from './DBconfig.js';
+import DBConn                from './DBconfig.js';
 import qs                from 'querystring';
 import bcrypt            from 'bcrypt';
 
@@ -11,10 +11,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
 const root       = path.join(__dirname,'../../');
 
-DB.connect(err=>{
-  if (err) throw err;
-  console.log('DB 서버 Connect');
-})
+const DB = DBConn(process.env.mysqlUser,process.env.mysqlPassword);
+DB.connect(()=>console.log('DB 연결'))
+
 export default http.createServer((req,rep)=>{
   // ? 요청 응답 함수 =====================
   
