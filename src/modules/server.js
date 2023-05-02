@@ -121,7 +121,7 @@ export default http.createServer((req,rep)=>{
           break
           } catch (e) {
             console.log(`없는 페이지 요청 : ${req.url}`);
-            Mrep(200,['<h1>요청하신 페이지는 없는 페이지 입니다. (404 Not found)</h1>'],'text/html');
+            Mrep(404,['<h1>요청하신 페이지는 없는 페이지 입니다. (404 Not found)</h1>'],'text/html');
             break
           }
           // ! =========================================

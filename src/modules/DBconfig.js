@@ -21,5 +21,5 @@ class DBConnector{
 }
 
 export default function (user, password) {
-  return mysql.createConnection(new DBConnector);
+  return mysql.createConnection(new DBConnector(user,password));
 }
