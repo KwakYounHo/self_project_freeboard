@@ -177,12 +177,17 @@ export default http.createServer((req,rep)=>{
 
         //* 로그인 요청 ====================================
         case req.url.includes('logIn/logInRequest') :
-          let UserData;
+          let UserData='';
           req.on('data',chunk=>{
             UserData += chunk;
           })
           req.on('end',()=>{
             const _UserData = qs.parse(UserData);
+            const sql = `select ID,PW from user_info where ID='${_UserData.ID}'`
+            DB.query(sql, (err,data)=>{
+              if (err) console.log(err);
+              console.log(data);
+            })
           })
         //* ===============================================
       }
