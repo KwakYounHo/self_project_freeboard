@@ -104,13 +104,11 @@ export default http.createServer((req,rep)=>{
             Mrep(200,['/Community/board/View/View.html'],'text/html');
             break
           }
-          // else {
-            // const requestTitle = decodeURI(req.url.split('/')[4]);
-            // DB.query(`select * from boardlist where title='${requestTitle}'`,(err,result)=>{
-              // Mrep(200,[JSON.stringify(result)],'text/json');
-            // });
-            // break
-          // }
+        case req.url==='/getCookie' :
+          if (req.headers.cookie) {
+            rep.writeHead(200, {"Content-Type":"text/json"});
+            rep.write()
+          }
         // * ==========================================
 
 
@@ -188,6 +186,14 @@ export default http.createServer((req,rep)=>{
             DB.query(sql, (err,data)=>{
               if (err) console.log(err);
               console.log(data);
+              if (data.length===1) {
+                if (bcrypt.compareSync(_UserData.PW, data[0].PW)) {
+                  const oneHour = new Date(Date.now()+60*60*1000).toUTCString();
+                  rep.writeHead(200, {"Content-Type":"text/html", "Set-Cookie":[`uid=${_UserData.ID}; httpOnly; expires=${oneHour};`]});
+                  rep.write("<script>history.go(-1)</script>");
+                  rep.end();
+                }
+              }
             })
           })
         //* ===============================================
