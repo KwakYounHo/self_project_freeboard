@@ -6,6 +6,7 @@ import DBConn            from '../modules/DBconfig.js';
 import qs                from 'querystring';
 import bcrypt            from 'bcrypt';
 import { Server }        from 'socket.io';
+import cookieParser      from '../modules/cookieParser.js';
 
 // ? root 디렉토리 설정
 const __filename = fileURLToPath(import.meta.url);
@@ -104,13 +105,22 @@ export default http.createServer((req,rep)=>{
             Mrep(200,['/Community/board/View/View.html'],'text/html');
             break
           }
+        // * 쿠키 주세요 =======================================
         case req.url==='/getCookie' :
           if (req.headers.cookie) {
             rep.writeHead(200, {"Content-Type":"text/json"});
-            rep.write()
+            rep.write(JSON.stringify(cookieParser(req.headers.cookie)));
+            rep.end();
+            break
+          } else {
+            rep.writeHead(200, {"Content-Type":"text/json"});
+            rep.write(JSON.stringify("none"));
+            rep.end();
+            break
           }
+        // * ==================================================
         // * ==========================================
-
+          
 
         // ! 자동 응답 처리 ============================
         default : 
@@ -189,9 +199,11 @@ export default http.createServer((req,rep)=>{
               if (data.length===1) {
                 if (bcrypt.compareSync(_UserData.PW, data[0].PW)) {
                   const oneHour = new Date(Date.now()+60*60*1000).toUTCString();
-                  rep.writeHead(200, {"Content-Type":"text/html", "Set-Cookie":[`uid=${_UserData.ID}; httpOnly; expires=${oneHour};`]});
+                  rep.writeHead(200, {"Content-Type":"text/html", "Set-Cookie":[`uid=${_UserData.ID}; httpOnly; expires=${oneHour}; path=/;`]});
                   rep.write("<script>history.go(-1)</script>");
                   rep.end();
+                } else {
+                  
                 }
               }
             })

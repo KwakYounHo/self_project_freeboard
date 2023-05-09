@@ -8,6 +8,16 @@
   <link rel="stylesheet" href="/Community/board/writeBoard/writeboard.css">
 </head>
 <body>
+  <script type="module">
+    import getCookie from "/src/modules/cookieRequest.js";
+    (async ()=>{
+      const cookie = await getCookie;
+      if (!cookie.uid) {
+        alert('로그인이 필요한 페이지 입니다.');
+        location.href = "/logIn/logIn.html";
+      }
+    })();
+  </script>
   <script src="/Community/board/writeBoard/writeboard.js" type="module"></script>
 </body>
 </html>

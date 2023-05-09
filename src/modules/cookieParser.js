@@ -1,5 +1,4 @@
-const cookie = 'a=b; c=d; e=f'
-function parse(cookie) {
+export default function (cookie) {
   let result = {};
   const splitOne = cookie.split(';');
   const splitTwo = splitOne.map(element => {
@@ -10,5 +9,3 @@ function parse(cookie) {
   })
   return result;
 }
-
-console.log(parse(cookie));
