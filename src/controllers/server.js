@@ -2,9 +2,10 @@ import http              from 'http';
 import fs                from 'fs';
 import path              from 'path';
 import { fileURLToPath } from 'url';
-import DBConn                from './DBconfig.js';
+import DBConn            from '../modules/DBconfig.js';
 import qs                from 'querystring';
 import bcrypt            from 'bcrypt';
+import { Server }        from 'socket.io';
 
 // ? root 디렉토리 설정
 const __filename = fileURLToPath(import.meta.url);
@@ -12,7 +13,7 @@ const __dirname  = path.dirname(__filename);
 const root       = path.join(__dirname,'../../');
 
 const DB = DBConn(process.env.mysqlUser,process.env.mysqlPassword);
-DB.connect(()=>console.log('DB 연결'))
+DB.connect(()=>console.log('root DB server running...'))
 
 export default http.createServer((req,rep)=>{
   // ? 요청 응답 함수 =====================
