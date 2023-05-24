@@ -118,7 +118,17 @@ export default http.createServer((req,rep)=>{
             rep.end();
             break
           }
-        // * ==================================================
+          // * ==================================================
+        
+        
+        // * 로그아웃 =======================================
+        case req.url==='/logout' :
+          rep.writeHead(200, {"Content-Type":"text/html; charset=utf-8", "Set-Cookie":"uid=; Max-Age=0;"});
+          console.log(root, "Main.html")
+          rep.write(`<script>location.href='/Main.html'</script>`);
+          rep.end();
+          break
+        // * ===============================================
         // * ==========================================
           
 
@@ -197,10 +207,12 @@ export default http.createServer((req,rep)=>{
               if (err) console.log(err);
               console.log(data);
               if (data.length===1) {
+                console.log(_UserData);
                 if (bcrypt.compareSync(_UserData.PW, data[0].PW)) {
+                  console.log('직전 페이지'+req.headers.referer);
                   const oneHour = new Date(Date.now()+60*60*1000).toUTCString();
-                  rep.writeHead(200, {"Content-Type":"text/html", "Set-Cookie":[`uid=${_UserData.ID}; httpOnly; expires=${oneHour}; path=/;`]});
-                  rep.write("<script>history.go(-1)</script>");
+                  rep.writeHead(200, {"Content-Type":"text/html; charset=utf-8", "Set-Cookie":[`uid=${_UserData.ID}; httpOnly; expires=${oneHour}; path=/;`]});
+                  rep.write(`<script>location.href='${_UserData.referrer}'</script>`);
                   rep.end();
                 } else {
                   
